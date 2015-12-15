@@ -1,27 +1,48 @@
 {
+  "extends": "eslint-config-airbnb",
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
   "ecmaFeatures": {
     "jsx": true,
     "modules": true
-  },
-  "env": {
-    "browser": true,
-    "node": true
-  },
-  "parser": "babel-eslint",
+  }
   "rules": {
-    "quotes": [2, "single"],
-    "strict": [2, "never"],
-    "babel/generator-star-spacing": 1,
-    "babel/new-cap": 1,
-    "babel/object-shorthand": 1,
-    "babel/arrow-parens": 1,
-    "babel/no-await-in-loop": 1,
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
-    "react/react-in-jsx-scope": 2
+    "react/react-in-jsx-scope": 2,
+    "react/sort-comp": [1, {
+      order: [
+        "lifecycle",
+        "/^bind.+$/",
+        "/^handle.+$/",
+        "everything-else",
+        "/^get.+$/",
+        "/^render.+$/",
+        "render",
+      ]
+    }],
+    // Temporarirly disabled due to a possible bug in babel-eslint (todomvc example)
+    "block-scoped-var": 0,
+    // Temporarily disabled for test/* until babel/babel-eslint#33 is resolved
+    "padded-blocks": 0,
+    "comma-dangle": [1, "always-multiline"],
+    "indent": [2, 2, {"SwitchCase": 1}],
+    "no-console": 1,
+    "no-alert": 2,
+    "semi": 0,
+    "new-cap": [2, {
+      "capIsNewExceptions": ["Immutable", "Immutable.List", "Immutable.Map"]
+    }],
+    "id-length": [2, {"exceptions": ["R", "x", "y", "e"]}],
+    "max-len": [1, 100],
+    "no-unused-expressions": [2, { allowShortCircuit: true }],
+    "babel/arrow-parens": 1,
   },
   "plugins": [
     "babel",
     "react"
-  ]
+  ],
 }
