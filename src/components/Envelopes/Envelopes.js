@@ -13,8 +13,8 @@ export default React.createClass({
     return (
       <div className='expenseCreator centered'>
         {this.data.envelopes.map((envelope) => (
-          <p key={envelope.id.objectId}>
-            Name: {envelope.name}
+          <p key={envelope.id.objectId} style={{ marginBottom: "2rem" }}>
+            Name: {envelope.name}<br />
             AmountCents: {envelope.amountCents}
           </p>
         ))}

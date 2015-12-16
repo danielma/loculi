@@ -11,10 +11,12 @@ export default React.createClass({
   },
 
   addExpense() {
+    const amountCents = Math.abs(parseFloat(this.refs.cost.value)) * -100
+
     Parse.Cloud.run('createTransaction', {
+      amountCents,
       payee: this.refs.name.value,
       envelopeId: this.refs.envelope.value,
-      amountCents: parseFloat(this.refs.cost.value) * 100,
     })
   },
 
