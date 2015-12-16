@@ -1,10 +1,10 @@
 import React from 'react'
-import { Expenses, AddExpense } from 'components'
+import { Envelopes, AddExpense } from 'components'
 
 export default function MainContainer() {
   return (
     <div>
-      <Expenses />
+      <Envelopes />
       <AddExpense />
     </div>
   )

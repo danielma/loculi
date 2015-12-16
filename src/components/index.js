@@ -1,4 +1,4 @@
-export Expenses from './Expenses/Expenses'
+export Envelopes from './Envelopes/Envelopes'
 export AddExpense from './AddExpense/AddExpense'
 
 // utility
