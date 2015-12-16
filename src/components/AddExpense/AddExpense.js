@@ -3,11 +3,27 @@ import Parse from 'parse'
 import ParseReact from 'parse-react'
 import { Button } from 'components'
 
+const Transaction = Parse.Object.extend('Transaction')
+
 export default React.createClass({
   mixins: [ParseReact.Mixin],
 
   observe() {
     return { envelopes: new Parse.Query('Envelope') }
+  },
+
+  addExpense() {
+    const transaction = new Transaction()
+
+    transaction.set('payee', this.refs.name.value)
+    transaction.set('amountCents', parseInt(this.refs.cost.value, 10) * 100)
+    transaction.set('envelope', this.refs.envelope.value)
+    transaction.setACL(new Parse.ACL(Parse.User.current()))
+
+    transaction.
+      save().
+      then(() => {},
+           () => {})
   },
 
   render() {
