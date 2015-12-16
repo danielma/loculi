@@ -3,8 +3,6 @@ import Parse from 'parse'
 import ParseReact from 'parse-react'
 import { Button } from 'components'
 
-const Transaction = Parse.Object.extend('Transaction')
-
 export default React.createClass({
   mixins: [ParseReact.Mixin],
 
@@ -13,17 +11,11 @@ export default React.createClass({
   },
 
   addExpense() {
-    const transaction = new Transaction()
-
-    transaction.set('payee', this.refs.name.value)
-    transaction.set('amountCents', parseInt(this.refs.cost.value, 10) * 100)
-    transaction.set('envelope', this.refs.envelope.value)
-    transaction.setACL(new Parse.ACL(Parse.User.current()))
-
-    transaction.
-      save().
-      then(() => {},
-           () => {})
+    Parse.Cloud.run('createTransaction', {
+      payee: this.refs.name.value,
+      envelopeId: this.refs.envelope.value,
+      amountCents: parseFloat(this.refs.cost.value) * 100,
+    })
   },
 
   render() {
@@ -40,8 +32,8 @@ export default React.createClass({
           ref='cost'
           placeholder='$0.00' />
         <select ref='envelope'>
-          {[{ id: {} }].concat(this.data.envelopes).map(function(envelope) {
-            return <option key={envelope.id.objectId} value={envelope.id.objectId}>{envelope.name}</option>
+          {[{}].concat(this.data.envelopes).map(function(envelope) {
+            return <option key={envelope.objectId} value={envelope.objectId}>{envelope.name}</option>
           })}
         </select>
         <Button onClick={this.addExpense}>
