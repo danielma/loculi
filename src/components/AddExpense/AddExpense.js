@@ -16,7 +16,10 @@ export default React.createClass({
     Parse.Cloud.run('createTransaction', {
       amountCents,
       payee: this.refs.name.value,
-      envelopeId: this.refs.envelope.value,
+      designations: [{
+        amountCents,
+        envelopeId: this.refs.envelope.value,
+      }],
     })
   },
 
