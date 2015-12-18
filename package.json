@@ -56,6 +56,7 @@
   },
   "dependencies": {
     "css-loader": "^0.23.0",
+    "immutable": "^3.7.6",
     "parse": "^1.6.9",
     "parse-react": "^0.5.0",
     "react": "^0.14.3",
