@@ -16,5 +16,5 @@ export function centsToString(cents) {
 }
 
 export function parseString(string) {
-  return parseInt(string.replace(/\W/g, '').replace(/^0+/, ''), 10)
+  return parseInt(string.replace(/\W/g, '').replace(/^0+/, ''), 10) || 0
 }

@@ -85,7 +85,7 @@ export default React.createClass({
 
   getDesignationTotal() {
     return this.state.designations.
-      reduce((acc, designation) => acc + designation.get('amountCents'), 0) || 0
+      reduce((acc, designation) => acc + designation.get('amountCents'), 0)
   },
 
   getSignMultiplier() {
