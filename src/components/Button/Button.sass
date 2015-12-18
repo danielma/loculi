@@ -1,15 +1,26 @@
 @import '~styles/variables'
 
+$buttoncolor: $highlightblue
+
 .button
-  border: 1px solid darken($highlightblue, 10%)
+  border: 1px solid darken($buttoncolor, 10%)
   border-radius: 2px
-  background-color: $highlightblue
+  background-color: $buttoncolor
   color: $white
   cursor: pointer
 
   &:hover
-    background-color: lighten($highlightblue, 4%)
+    background-color: lighten($buttoncolor, 4%)
 
   &[disabled]
     pointer-events: none
     background-color: #CCC
+
+.active
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, .3)
+  background-color: darken($buttoncolor, 20%)
+
+  &:hover
+    background-color: darken($buttoncolor, 10%)
+
+.inactive

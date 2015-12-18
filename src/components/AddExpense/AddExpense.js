@@ -77,6 +77,17 @@ export default React.createClass({
     ].every((bool) => bool === true)
   },
 
+  setIsIncome(isIncome = this.state.isIncome) {
+    if (isIncome === this.state.isIncome) { return }
+
+    // reverse signs
+    const transactionAmountCents = this.state.transactionAmountCents * -1
+    const designations = this.state.designations.
+      map((designation) => designation.update('amountCents', (amount) => amount * -1))
+
+    this.setState({ isIncome, transactionAmountCents, designations })
+  },
+
   getTransactionDesignationAmountDifference() {
     return (
       (this.state.transactionAmountCents || 0) - this.getDesignationTotal()
@@ -94,7 +105,15 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="expenseCreator centered">
+      <div>
+        <div>
+          <Button
+            active={this.state.isIncome}
+            onClick={() => this.setIsIncome(true)}>Income</Button>
+          <Button
+            active={!this.state.isIncome}
+            onClick={() => this.setIsIncome(false)}>Expense</Button>
+        </div>
         <input
           type="text"
           ref="payee"
