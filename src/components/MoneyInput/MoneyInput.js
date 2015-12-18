@@ -1,18 +1,5 @@
 import React, { PropTypes } from 'react'
-
-function noop() {}
-
-function centsToString(cents) {
-  if (isNaN(cents)) { return '$0.00' }
-  if (cents < 10) { return `$0.0${cents}` }
-  if (cents < 100) { return `$0.${cents}` }
-
-  const str = cents.toString()
-  const lastTwoDigits = str.substring(str.length - 2, str.length)
-  const otherDigits = str.substring(0, str.length - 2)
-
-  return `$${otherDigits}.${lastTwoDigits}`
-}
+import { noop, money } from 'utils'
 
 export default class MoneyInput extends React.Component {
   static propTypes = {
@@ -38,7 +25,7 @@ export default class MoneyInput extends React.Component {
       <input
         type="text"
         ref="input"
-        value={centsToString(value)}
+        value={money.centsToString(value)}
         onChange={this.handleChange}
         {...others} />
     )
