@@ -1,6 +1,7 @@
 import React from 'react'
 import Parse from 'parse'
 import ParseReact from 'parse-react'
+import { money } from 'utils'
 
 export default React.createClass({
   mixins: [ParseReact.Mixin],
@@ -11,14 +12,14 @@ export default React.createClass({
 
   render() {
     return (
-      <div className='expenseCreator centered'>
+      <div>
         {this.data.envelopes.map((envelope) => (
-          <p key={envelope.id.objectId} style={{ marginBottom: "2rem" }}>
+          <p key={envelope.id.objectId} style={{ marginBottom: '2rem' }}>
             Name: {envelope.name}<br />
-            AmountCents: {envelope.amountCents}
+            Amount: {money.centsToString(envelope.amountCents)}
           </p>
         ))}
       </div>
     )
-  }
+  },
 })
