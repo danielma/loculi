@@ -2,7 +2,7 @@ import React from 'react'
 import Parse from 'parse'
 import Immutable from 'immutable'
 import ParseReact from 'parse-react'
-import { Button } from 'components'
+import { Button, MoneyInput } from 'components'
 
 const emptyDesignation = Immutable.Map({
   amountCents: 0,
@@ -30,15 +30,13 @@ export default React.createClass({
     return Math.abs(parseFloat(string)) * 100 * this.getSignMultiplier()
   },
 
-  updateTransactionAmount(amountText) {
-    this.setState({ transactionAmountCents: this.stringToCents(amountText) })
+  updateTransactionAmount(transactionAmountCents) {
+    this.setState({ transactionAmountCents })
   },
 
-  updateDesignationAmount(index, amountText) {
+  updateDesignationAmount(index, amountCents) {
     const designations = this.state.designations.
-      update(index, (designation) => (
-        designation.merge({ amountText, amountCents: this.stringToCents(amountText) })
-      ))
+      update(index, (designation) => designation.set('amountCents', amountCents))
 
     this.setState({ designations })
   },
@@ -79,12 +77,14 @@ export default React.createClass({
   },
 
   getTransactionDesignationAmountDifference() {
-    return (this.state.transactionAmountCents - this.getDesignationTotal()) * this.getSignMultiplier()
+    return (
+      (this.state.transactionAmountCents || 0) - this.getDesignationTotal()
+    ) * this.getSignMultiplier()
   },
 
   getDesignationTotal() {
     return this.state.designations.
-      reduce((acc, designation) => acc + (designation.get('amountCents') || 0), 0)
+      reduce((acc, designation) => acc + designation.get('amountCents'), 0) || 0
   },
 
   getSignMultiplier() {
@@ -98,17 +98,15 @@ export default React.createClass({
           type="text"
           ref="payee"
           placeholder="File a new expense" />
-        <input
+        <MoneyInput
           type="text"
-          onChange={(e) => this.updateTransactionAmount(e.target.value)}
-          placeholder="$0.00" />
+          onChange={(value) => this.updateTransactionAmount(value)}
+          value={this.state.transactionAmountCents} />
         {this.state.designations.map((designation, index) => (
           <div key={index}>
-            <input
-              type="text"
-              onChange={(e) => this.updateDesignationAmount(index, e.target.value)}
-              value={designation.get('amountText')}
-              placeholder="$0.00" />
+            <MoneyInput
+              onChange={(value) => this.updateDesignationAmount(index, value)}
+              value={designation.get('amountCents')} />
             <select
               value={designation.get('envelopeId')}
               onChange={(e) => this.updateDesignationEnvelope(index, e.target.value)}>
