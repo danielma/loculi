@@ -26,12 +26,8 @@ export default React.createClass({
     }
   },
 
-  componentWillUpdate() {
-    console.log(this.state.designations.toJS())
-  },
-
   stringToCents(string) {
-    return Math.abs(parseFloat(string)) * 100 * (this.state.isIncome ? 1 : -1)
+    return Math.abs(parseFloat(string)) * 100 * this.getSignMultiplier()
   },
 
   updateTransactionAmount(amountText) {
@@ -70,19 +66,30 @@ export default React.createClass({
     this.setState({ designations: this.state.designations.delete(index) })
   },
 
+  isValidAmount() {
+    return this.getTransactionDesignationAmountDifference() === 0
+  },
+
   isValid() {
     return [
       this.refs.payee && this.refs.payee.value.trim() !== '',
-      this.state.transactionAmountCents === this.getDesignationTotal(),
+      this.isValidAmount(),
       this.state.designations.every((designation) => designation.get('envelopeId')),
     ].every((bool) => bool === true)
   },
 
-  getDesignationTotal() {
-    return this.state.designations.
-      reduce((acc, designation) => acc + designation.get('amountCents'), 0)
+  getTransactionDesignationAmountDifference() {
+    return (this.state.transactionAmountCents - this.getDesignationTotal()) * this.getSignMultiplier()
   },
 
+  getDesignationTotal() {
+    return this.state.designations.
+      reduce((acc, designation) => acc + (designation.get('amountCents') || 0), 0)
+  },
+
+  getSignMultiplier() {
+    return this.state.isIncome ? 1 : -1
+  },
 
   render() {
     return (
@@ -113,6 +120,9 @@ export default React.createClass({
             <Button onClick={this.addDesignation}>+</Button>
           </div>
         ))}
+        {this.isValidAmount() || <p>
+          Off by {this.getTransactionDesignationAmountDifference()} cents!
+        </p>}
         <Button onClick={this.addExpense} disabled={!this.isValid()}>
           Add expense +
         </Button>
