@@ -78,7 +78,9 @@ export default React.createClass({
   },
 
   getTransactionDesignationAmountDifference() {
-    return (this.state.transactionAmountCents || 0) - this.getDesignationTotal()
+    return (
+      (this.state.transactionAmountCents || 0) - this.getDesignationTotal()
+    ) * this.getSignMultiplier()
   },
 
   getDesignationTotal() {
@@ -102,11 +104,13 @@ export default React.createClass({
         <MoneyInput
           type="text"
           onChange={(value) => this.updateTransactionAmount(value)}
+          reverseDisplay={!this.state.isIncome}
           value={this.state.transactionAmountCents} />
         {this.state.designations.map((designation, index) => (
           <div key={index}>
             <MoneyInput
               onChange={(value) => this.updateDesignationAmount(index, value)}
+              reverseDisplay={!this.state.isIncome}
               value={designation.get('amountCents')} />
             <select
               value={designation.get('envelopeId')}

@@ -5,17 +5,23 @@ export default class MoneyInput extends React.Component {
   static propTypes = {
     value: PropTypes.number,
     onChange: PropTypes.func,
+    reverseDisplay: PropTypes.bool,
   }
 
   static defaultProps = {
     value: 0,
     onChange: noop,
+    reverseDisplay: false,
   }
 
   handleChange = () => {
     const { value } = this.refs.input
 
-    this.props.onChange(parseFloat(value.replace(/(\W|^.0+|\.)/g, '')))
+    this.props.onChange(money.parseString(value) * this.signMultiplier)
+  }
+
+  get signMultiplier() {
+    return this.props.reverseDisplay ? -1 : 1
   }
 
   render() {
@@ -25,7 +31,7 @@ export default class MoneyInput extends React.Component {
       <input
         type="text"
         ref="input"
-        value={money.centsToString(value)}
+        value={money.centsToString(value * this.signMultiplier)}
         onChange={this.handleChange}
         {...others} />
     )

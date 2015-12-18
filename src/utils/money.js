@@ -3,7 +3,7 @@ export function centsToString(cents) {
 
   const absCents = Math.abs(cents)
   const isPositive = cents >= 0
-  const prefix = `$`
+  const prefix = `$${isPositive ? '' : '-'}`
 
   if (absCents < 10) { return `${prefix}0.0${absCents}` }
   if (absCents < 100) { return `${prefix}0.${absCents}` }
@@ -12,5 +12,9 @@ export function centsToString(cents) {
   const lastTwoDigits = str.substring(str.length - 2, str.length)
   const otherDigits = str.substring(0, str.length - 2)
 
-  return `${prefix}${otherDigits}.${lastTwoDigits}`
+  return `$${otherDigits}.${lastTwoDigits}`
+}
+
+export function parseString(string) {
+  return parseInt(string.replace(/\W/g, '').replace(/^0+/, ''), 10)
 }
