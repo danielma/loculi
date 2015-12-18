@@ -32,7 +32,11 @@ export default React.createClass({
   },
 
   updateTransactionAmount(transactionAmountCents) {
-    this.setState({ transactionAmountCents })
+    let { designations } = this.state
+    if (designations.size === 1) {
+      designations = designations.setIn([0, 'amountCents'], transactionAmountCents)
+    }
+    this.setState({ transactionAmountCents, designations })
   },
 
   updateDesignationAmount(index, amountCents) {
@@ -127,10 +131,11 @@ export default React.createClass({
           value={this.state.transactionAmountCents} />
         {this.state.designations.map((designation, index) => (
           <div key={index}>
-            <MoneyInput
+            {this.state.designations.size > 1 && <MoneyInput
               onChange={(value) => this.updateDesignationAmount(index, value)}
               reverseDisplay={!this.state.isIncome}
               value={designation.get('amountCents')} />
+            }
             <select
               value={designation.get('envelopeId')}
               onChange={(e) => this.updateDesignationEnvelope(index, e.target.value)}>
