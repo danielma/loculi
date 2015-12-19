@@ -1,11 +1,12 @@
 import React from 'react'
-import { Envelopes, AddExpense } from 'components'
+import { Envelopes, AddTransaction } from 'components'
 
 export default function MainContainer() {
   return (
     <div>
       <Envelopes />
-      <AddExpense />
+      <div style={{ height: "30px" }}></div>
+      <AddTransaction />
     </div>
   )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import Parse from 'parse'
 import Immutable from 'immutable'
 import ParseReact from 'parse-react'
-import { Button, MoneyInput } from 'components'
+import { Button, MoneyInput, ButtonGroup } from 'components'
 import { money } from 'utils'
 
 const emptyDesignation = Immutable.Map({
@@ -11,7 +11,7 @@ const emptyDesignation = Immutable.Map({
 })
 
 export default React.createClass({
-  displayName: 'AddExpense',
+  displayName: 'AddTransaction',
 
   mixins: [ParseReact.Mixin],
 
@@ -53,7 +53,7 @@ export default React.createClass({
     this.setState({ designations })
   },
 
-  addExpense() {
+  addTransaction() {
     Parse.Cloud.run('createTransaction', {
       amountCents: this.state.transactionAmountCents,
       payee: this.state.payee,
@@ -108,16 +108,20 @@ export default React.createClass({
   },
 
   render() {
+    const styles = require('./AddTransaction.sass')
+
     return (
-      <div>
-        <div>
+      <div className={styles.addTransaction}>
+        <h4>Add a Transaction</h4>
+        <ButtonGroup>
           <Button
             active={this.state.isIncome}
-            onClick={() => this.setIsIncome(true)}>Income</Button>
+            onClick={() => this.setIsIncome(true)}>Income
+          </Button>
           <Button
             active={!this.state.isIncome}
             onClick={() => this.setIsIncome(false)}>Expense</Button>
-        </div>
+        </ButtonGroup>
         <input
           type="text"
           ref="payee"
@@ -150,7 +154,7 @@ export default React.createClass({
         {this.isValidAmount() || <p>
           Off by {money.centsToString(this.getTransactionDesignationAmountDifference())}!
         </p>}
-        <Button onClick={this.addExpense} disabled={!this.isValid()}>
+        <Button onClick={this.addTransaction} disabled={!this.isValid()}>
           Add expense +
         </Button>
       </div>

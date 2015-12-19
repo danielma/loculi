@@ -11,13 +11,15 @@ export default React.createClass({
   },
 
   render() {
+    const styles = require("./Envelopes.sass")
+
     return (
       <div>
         {this.data.envelopes.map((envelope) => (
-          <p key={envelope.id.objectId} style={{ marginBottom: '2rem' }}>
+          <div className={styles.envelope} key={envelope.id.objectId}>
             Name: {envelope.name}<br />
             Amount: {money.centsToString(envelope.amountCents)}
-          </p>
+          </div>
         ))}
       </div>
     )
