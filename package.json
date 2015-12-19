@@ -55,6 +55,7 @@
     "webpack-hot-middleware": "^2.6.0"
   },
   "dependencies": {
+    "classnames": "^2.2.1",
     "css-loader": "^0.23.0",
     "immutable": "^3.7.6",
     "parse": "^1.6.9",
