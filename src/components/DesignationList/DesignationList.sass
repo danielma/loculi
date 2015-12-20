@@ -1,5 +1,16 @@
 @import '~styles/variables'
 
+.header
+  color: $mustard
+  font-size: .8rem
+  font-weight: bold
+  background-color: $mauve
+  padding: .3rem
+  display: flex
+
+  > *
+    flex-grow: 1
+
 .designation
   background-color: white
   border-style: solid
@@ -17,7 +28,7 @@
     flex-grow: 1
 
 .amount
-  text-align: right
+  flex-grow: 0
 
   &.positive
     color: $grass

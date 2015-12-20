@@ -21,6 +21,10 @@ export default React.createClass({
 
     return (
       <div>
+        <div className={styles.header}>
+          <span>Payee</span>
+          <span className={styles.amount}>Amount</span>
+        </div>
         {this.data.designations.map((designation) => (
           <div className={styles.designation} key={designation.objectId}>
             <span className={styles.name}>{designation.transaction.payee}</span>

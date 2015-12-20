@@ -3,6 +3,8 @@ import ParseReact from 'parse-react'
 import { Main, Login } from 'containers'
 
 export default React.createClass({
+  displayName: 'App',
+
   propTypes: {
     children: PropTypes.node,
   },
