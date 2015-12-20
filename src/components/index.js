@@ -4,6 +4,9 @@ export EnvelopeSidebar from './EnvelopeSidebar/EnvelopeSidebar'
 export ListEnvelope from './ListEnvelope/ListEnvelope'
 export NewEnvelope from './NewEnvelope/NewEnvelope'
 
+// Funding
+export NewFund from './NewFund/NewFund'
+
 export AddTransaction from './AddTransaction/AddTransaction'
 export DesignationList from './DesignationList/DesignationList'
 

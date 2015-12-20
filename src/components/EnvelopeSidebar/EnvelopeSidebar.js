@@ -33,6 +33,7 @@ export default React.createClass({
         </div>
         <div className={styles.footer}>
           <Button to="/envelopes/new" className="sm">+</Button>
+          <Button to="/fund" className="sm">Fund</Button>
         </div>
       </div>
     )
