@@ -1,4 +1,5 @@
 export Envelopes from './Envelopes/Envelopes'
+export EnvelopeSidebar from './EnvelopeSidebar/EnvelopeSidebar'
 export ListEnvelope from './ListEnvelope/ListEnvelope'
 
 export AddTransaction from './AddTransaction/AddTransaction'

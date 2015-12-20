@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import Parse from 'parse'
 import ParseReact from 'parse-react'
 import R from 'ramda'
-import { ListEnvelope, DesignationList } from 'components'
+import { EnvelopeSidebar, DesignationList } from 'components'
 import { parameterize } from 'utils/string'
 
 export default React.createClass({
@@ -41,14 +41,7 @@ export default React.createClass({
 
     return (
       <div className={styles.wrapper}>
-        <div className={styles.envelopes}>
-          {this.data.envelopes.map((envelope) => (
-            <ListEnvelope
-              key={envelope.objectId}
-              envelope={envelope}
-              selected={envelope === selectedEnvelope} />
-          ))}
-        </div>
+        <EnvelopeSidebar envelopes={this.data.envelopes} selected={selectedEnvelope} />
         <div className={styles.designationList}>
           {selectedEnvelope ?
             <DesignationList envelope={selectedEnvelope} /> :
