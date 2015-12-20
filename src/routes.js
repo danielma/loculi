@@ -6,7 +6,7 @@ import * as components from 'components'
 export default (
   <Route path="/" component={App}>
     <IndexRoute components={components.Envelopes} />
-    <Route path="envelopes" component={components.Envelopes} />
+    <Route path="envelopes(/:name)" component={components.Envelopes} />
     <Route path="add" component={components.AddTransaction} />
   </Route>
 )

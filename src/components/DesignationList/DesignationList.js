@@ -17,12 +17,16 @@ export default React.createClass({
   },
 
   render() {
+    const styles = require('./DesignationList.sass')
+
     return (
       <div>
         {this.data.designations.map((designation) => (
-          <div key={designation.objectId}>
-            {designation.transaction.payee}
-            {money.centsToString(designation.amountCents)}
+          <div className={styles.designation} key={designation.objectId}>
+            <span className={styles.name}>{designation.transaction.payee}</span>
+            <span className={`${styles.amount} ${designation.amountCents >= 0 ? styles.positive : styles.negative}`}>
+              {money.centsToString(designation.amountCents)}
+            </span>
           </div>
         ))}
       </div>

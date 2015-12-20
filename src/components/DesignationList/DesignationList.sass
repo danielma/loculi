@@ -1,22 +1,20 @@
 @import '~styles/variables'
 
-.listEnvelope
-  font-size: .7rem
-  font-weight: bold
-  text-transform: uppercase
+.designation
+  background-color: white
+  border-style: solid
+  border-width: 0 0 1px
+  border-color: $hilfigher
+  font-size: .8rem
   padding: .3rem
   display: flex
   text-decoration: none
-  color: inherit
 
-  &.selected
-    background-color: darken($lightblue, 10%)
+  &:first-child
+    border-top-width: 0
 
   > *
     flex-grow: 1
-
-.name
-  margin-right: 3rem
 
 .amount
   text-align: right
