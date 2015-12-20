@@ -9,3 +9,7 @@ export DesignationList from './DesignationList/DesignationList'
 export Button from './Button/Button'
 export ButtonGroup from './ButtonGroup/ButtonGroup'
 export MoneyInput from './MoneyInput/MoneyInput'
+
+// layout
+
+export Sidebar from './Sidebar/Sidebar'
