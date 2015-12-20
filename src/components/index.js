@@ -12,4 +12,4 @@ export MoneyInput from './MoneyInput/MoneyInput'
 
 // layout
 
-export Sidebar from './Sidebar/Sidebar'
+export Navigation from './Navigation/Navigation'

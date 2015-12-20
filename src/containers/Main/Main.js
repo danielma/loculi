@@ -1,17 +1,19 @@
 import React, { PropTypes } from 'react'
-import { Sidebar } from 'components'
+import { Navigation } from 'components'
 import styles from './Main.sass'
 
 export default class MainContainer extends React.Component {
   static propTypes = {
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
   }
 
   render() {
     return (
-      <div className={styles.main}>
-        <Sidebar />
-        {this.props.children}
+      <div className={styles.wrapper}>
+        <Navigation />
+        <div className={styles.main}>
+          {this.props.children}
+        </div>
       </div>
     )
   }
