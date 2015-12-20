@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { Button } from 'components'
 import { string } from 'utils'
 import Parse from 'parse'
+import ParseReact from 'parse-react'
 
 export default React.createClass({
   displayName: 'NewEnvelope',
@@ -13,12 +14,12 @@ export default React.createClass({
   handleSubmit(e) {
     e.preventDefault()
 
-    const envelope = new Parse.Object('Envelope')
     const name = this.refs.name.value
     const slug = string.parameterize(name)
-    envelope.set('name', name)
+    const acl = new Parse.ACL(Parse.User.current())
 
-    envelope.save().
+    ParseReact.Mutation.Create('Envelope', { name, ACL: acl }).
+      dispatch().
       then(() => this.context.history.pushState({}, `/envelopes/${slug}`),
            () => this.setState({ error: true }))
   },
