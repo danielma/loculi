@@ -33,8 +33,11 @@ export default React.createClass({
   handleSubmit(e) {
     e.preventDefault()
 
-    this.state.fundings.map((amount, objectId) => {
-      console.log('Would fund', amount, 'to', objectId)
+    Parse.Cloud.run('createTransaction', {
+      amountCents: this.getTotal(),
+      payee: 'Funding',
+      designations: this.state.fundings.
+        map((amountCents, envelopeId) => ({ amountCents, envelopeId })).toArray(),
     })
   },
 
@@ -42,6 +45,10 @@ export default React.createClass({
     const fundings = this.state.fundings.set(objectId, value)
 
     this.setState({ fundings })
+  },
+
+  getTotal() {
+    return this.state.fundings.reduce((acc, amount) => acc + amount, 0)
   },
 
   getFunding({ objectId }) {
@@ -53,7 +60,7 @@ export default React.createClass({
 
     const incomeCents = income && income[0] && income[0].amountCents || 0
 
-    const available = incomeCents - this.state.fundings.reduce((acc, amount) => acc + amount, 0)
+    const available = incomeCents - this.getTotal()
 
     return (
       <div>
