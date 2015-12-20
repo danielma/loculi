@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 import styles from './Button.sass'
 
 function getClassName({ className, active }) {
@@ -9,12 +10,12 @@ function getClassName({ className, active }) {
   return styleList.map((prop) => styles[prop]).join(' ')
 }
 
-export default function Button({ className = '', active = null, ...props }) {
-  return (
-    <button
-      className={getClassName({ className, active })}
-      {...props}>
-      {props.children}
-    </button>
-  )
+export default function Button({ className = '', active = null, to = null, ...props }) {
+  const customClass = getClassName({ className, active })
+
+  if (to) {
+    return <Link to={to} className={customClass} {...props} />
+  }
+
+  return <button className={customClass} {...props} />
 }
