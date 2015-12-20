@@ -1,4 +1,5 @@
-exports.money = require('./money')
-exports.noop = function() {}
+export money from './money'
+export string from './string'
+export function noop() {}
 
 module.exports = exports

@@ -57,11 +57,14 @@
   "dependencies": {
     "classnames": "^2.2.1",
     "css-loader": "^0.23.0",
+    "history": "~1.13",
     "immutable": "^3.7.6",
     "parse": "^1.6.9",
     "parse-react": "^0.5.0",
+    "ramda": "^0.18.0",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
+    "react-router": "^1.0.2",
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0"
   }

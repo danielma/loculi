@@ -1,29 +1,28 @@
 @import '~styles/variables'
 
 .listEnvelope
-  background-color: white
-  border-style: solid
-  border-width: 1px 0
-  border-color: black
+  font-size: .7rem
+  font-weight: bold
+  text-transform: uppercase
+  padding: .3rem
   display: flex
+  text-decoration: none
+  color: inherit
 
   &.selected
-    background-color: $highlightblue
-
-  &:first-child
-    border-bottom-width: 0
+    background-color: darken($lightblue, 10%)
 
   > *
     flex-grow: 1
 
 .name
-  font-weight: bold
+  margin-right: 3rem
 
 .amount
   text-align: right
 
   &.positive
-    color: green
+    color: $grass
 
   &.negative
-    color: red
+    color: $mauve

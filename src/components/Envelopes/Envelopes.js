@@ -1,12 +1,18 @@
 import React, { PropTypes } from 'react'
 import Parse from 'parse'
 import ParseReact from 'parse-react'
-import { ListEnvelope } from 'components'
+import R from 'ramda'
+import { ListEnvelope, DesignationList } from 'components'
+import { parameterize } from 'utils/string'
 
 export default React.createClass({
+  displayName: 'Envelopes',
+
   propTypes: {
-    onSelect: PropTypes.func,
     selected: PropTypes.object,
+    params: PropTypes.shape({
+      name: PropTypes.string,
+    }),
   },
 
   mixins: [ParseReact.Mixin],
@@ -14,8 +20,12 @@ export default React.createClass({
   getDefaultProps() {
     return {
       onSelect: () => {},
-      selected: {},
+      params: {},
     }
+  },
+
+  getInitialState() {
+    return { selectedEnvelope: null }
   },
 
   observe() {
@@ -23,15 +33,27 @@ export default React.createClass({
   },
 
   render() {
+    const styles = require('./Envelopes.sass')
+    const paramEnvelope = parameterize(this.props.params.name)
+    const selectedEnvelope = R.find(
+      (envelope) => parameterize(envelope.name) === paramEnvelope,
+      this.data.envelopes)
+
     return (
-      <div>
-        {this.data.envelopes.map((envelope) => (
-          <ListEnvelope
-            key={envelope.objectId}
-            envelope={envelope}
-            selected={this.props.selected.objectId === envelope.objectId}
-            onClick={() => this.props.onSelect(envelope)} />
-        ))}
+      <div className={styles.wrapper}>
+        <div className={styles.envelopes}>
+          {this.data.envelopes.map((envelope) => (
+            <ListEnvelope
+              key={envelope.objectId}
+              envelope={envelope}
+              selected={envelope === selectedEnvelope} />
+          ))}
+        </div>
+        <div className={styles.designationList}>
+          {selectedEnvelope ?
+            <DesignationList envelope={selectedEnvelope} /> :
+            <div className={styles.blankSlate} />}
+        </div>
       </div>
     )
   },
