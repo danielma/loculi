@@ -1,9 +1,11 @@
 import React from 'react'
 import ParseReact from 'parse-react'
 
-export function observe(getObserves) {
-  return function wrapWithConnect(Component) {
-    const name = Component.displayName || Component.name || 'Component'
+export function observe(observes) {
+  const getObserves = (typeof observes === 'function') ? observes : () => (observes)
+
+  return function wrapWithConnect(WrappedComponent) {
+    const name = WrappedComponent.displayName || WrappedComponent.name || 'Component'
 
     return React.createClass({
       displayName: `Observe(${name})`,
@@ -20,7 +22,7 @@ export function observe(getObserves) {
           ...this.props,
         }
 
-        return <Component {...props} />
+        return <WrappedComponent {...props} />
       },
     })
   }

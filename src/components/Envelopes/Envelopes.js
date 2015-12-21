@@ -1,15 +1,13 @@
 import React, { PropTypes } from 'react'
 import Parse from 'parse'
-import ParseReact from 'parse-react'
 import R from 'ramda'
 import Modal from 'react-modal'
 import { EnvelopeSidebar, DesignationList, NewEnvelope } from 'components'
 import { parameterize } from 'utils/string'
+import { observe } from 'utils/reactUtils'
 
-export default React.createClass({
-  displayName: 'Envelopes',
-
-  propTypes: {
+class Envelopes extends React.Component {
+  static propTypes = {
     selected: PropTypes.object,
     params: PropTypes.shape({
       name: PropTypes.string,
@@ -17,24 +15,22 @@ export default React.createClass({
     history: PropTypes.shape({
       goBack: PropTypes.func.isRequired,
     }).isRequired,
-  },
 
-  mixins: [ParseReact.Mixin],
+    // connect
+    // TODO: real prop type here
+    envelopes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }
 
-  getDefaultProps() {
-    return {
-      onSelect: () => {},
-      params: {},
-    }
-  },
+  static defaultProps = {
+    onSelect: () => {},
+    params: {},
+  }
 
-  getInitialState() {
-    return { selectedEnvelope: null }
-  },
+  constructor(props) {
+    super(props)
 
-  observe() {
-    return { envelopes: new Parse.Query('Envelope') }
-  },
+    this.state = { selectedEnvelope: null }
+  }
 
   render() {
     const styles = require('./Envelopes.sass')
@@ -42,11 +38,11 @@ export default React.createClass({
     const newEnvelope = paramEnvelope === 'new'
     const selectedEnvelope = R.find(
       (envelope) => parameterize(envelope.name) === paramEnvelope,
-      this.data.envelopes)
+      this.props.envelopes)
 
     return (
       <div className={styles.wrapper}>
-        <EnvelopeSidebar envelopes={this.data.envelopes} selected={selectedEnvelope} />
+        <EnvelopeSidebar envelopes={this.props.envelopes} selected={selectedEnvelope} />
         <div className={styles.designationList}>
           {selectedEnvelope ?
             <DesignationList envelope={selectedEnvelope} /> :
@@ -57,5 +53,7 @@ export default React.createClass({
         </Modal>
       </div>
     )
-  },
-})
+  }
+}
+
+export default observe({ envelopes: new Parse.Query('Envelope') })(Envelopes)

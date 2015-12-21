@@ -1,20 +1,23 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Parse from 'parse'
-import ParseReact from 'parse-react'
 import { money } from 'utils'
+import { observe } from 'utils/reactUtils'
 
-export default React.createClass({
-  mixins: [ParseReact.Mixin],
+function getObserves(props) {
+  const designations = new Parse.Query('Designation')
 
-  observe(props) {
-    const designations = new Parse.Query('Designation')
+  designations.
+    equalTo('envelope', props.envelope).
+    include('transaction')
 
-    designations.
-      equalTo('envelope', props.envelope).
-      include('transaction')
+  return { designations }
+}
 
-    return { designations }
-  },
+class DesignationList extends React.Component {
+  static propTypes = {
+    // TODO: proptypes?
+    designations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }
 
   render() {
     const styles = require('./DesignationList.sass')
@@ -25,7 +28,7 @@ export default React.createClass({
           <span>Payee</span>
           <span className={styles.amount}>Amount</span>
         </div>
-        {this.data.designations.map((designation) => (
+        {this.props.designations.map((designation) => (
           <div className={styles.designation} key={designation.objectId}>
             <span className={styles.name}>{designation.transaction.payee}</span>
             <span className={`${styles.amount} ${designation.amountCents >= 0 ? styles.positive : styles.negative}`}>
@@ -35,5 +38,7 @@ export default React.createClass({
         ))}
       </div>
     )
-  },
-})
+  }
+}
+
+export default observe(getObserves)(DesignationList)
