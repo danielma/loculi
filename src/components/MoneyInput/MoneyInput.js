@@ -31,7 +31,7 @@ export default class MoneyInput extends React.Component {
       <input
         type="text"
         ref="input"
-        value={money.centsToString(value * this.signMultiplier)}
+        value={money.centsToString(Math.round(value) * this.signMultiplier)}
         onChange={this.handleChange}
         {...others} />
     )
