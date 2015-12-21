@@ -4,7 +4,7 @@ import R from 'ramda'
 import Modal from 'react-modal'
 import { EnvelopeSidebar, DesignationList, NewEnvelope } from 'components'
 import { parameterize } from 'utils/string'
-import { observe } from 'utils/reactUtils'
+import { observe } from 'utils/react'
 
 class Envelopes extends React.Component {
   static propTypes = {

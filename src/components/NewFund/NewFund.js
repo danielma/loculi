@@ -5,6 +5,7 @@ import R from 'ramda'
 import { money } from 'utils'
 import Immutable from 'immutable'
 import { Button, MoneyInput } from 'components'
+import { observe } from 'utils/react'
 
 const separateEnvelopes = R.groupBy((envelope) => {
   if (envelope.name === 'Income Cash Pool') {
