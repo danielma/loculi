@@ -33,7 +33,8 @@ class NewFund extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
 
-    Parse.Cloud.run('createTransaction', {
+    Parse.Cloud.run('createTransfer', {
+      fromEnvelopeId: separateEnvelopes(this.props.envelopes).income[0].objectId,
       amountCents: this.totalCents,
       payee: 'Funding',
       designations: this.state.fundings.
