@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Parse from 'parse'
 import { money } from 'utils'
-import { observe } from 'utils/reactUtils'
+import { observe } from 'utils/react'
 
 function getObserves(props) {
   const designations = new Parse.Query('Designation')

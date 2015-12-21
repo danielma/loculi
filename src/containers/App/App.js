@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import ParseReact from 'parse-react'
 import { Main, Login } from 'containers'
-import { observe } from 'utils/reactUtils'
+import { observe } from 'utils/react'
 
 class App extends React.Component {
   static propTypes = {
