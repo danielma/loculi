@@ -8,5 +8,6 @@ export default (
     <IndexRoute components={components.Envelopes} />
     <Route path="envelopes(/:name)" component={components.Envelopes} />
     <Route path="add" component={components.AddTransaction} />
+    <Route path="fund" component={components.NewFund} />
   </Route>
 )
