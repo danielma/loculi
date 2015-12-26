@@ -10,6 +10,7 @@ export default function Navigation() {
       <ul>
         <NavigationLink to="/envelopes">Envelopes</NavigationLink>
         <NavigationLink to="/add">Add Transaction</NavigationLink>
+        <NavigationLink to="/import">Import Transactions</NavigationLink>
       </ul>
       <a className={styles.logout} onClick={User.logOut}>
         <svg viewBox="0 0 60 60">

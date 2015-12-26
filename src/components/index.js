@@ -9,6 +9,7 @@ export NewFund from './NewFund/NewFund'
 
 export AddTransaction from './AddTransaction/AddTransaction'
 export DesignationList from './DesignationList/DesignationList'
+export InboxList from './InboxList/InboxList'
 
 // utility
 
@@ -19,3 +20,7 @@ export MoneyInput from './MoneyInput/MoneyInput'
 // layout
 
 export Navigation from './Navigation/Navigation'
+
+// import
+
+export Import from './Import/Import'
