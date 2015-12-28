@@ -7,8 +7,6 @@ import { parameterize } from 'utils/string'
 import { observe } from 'utils/react'
 import styles from './Envelopes.sass'
 
-const inboxEnvelope = { name: 'Inbox', amountCents: 0 }
-
 class Envelopes extends React.Component {
   static propTypes = {
     selected: PropTypes.object,
@@ -22,6 +20,7 @@ class Envelopes extends React.Component {
     // connect
     // TODO: real prop type here
     envelopes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
   }
 
   static defaultProps = {
@@ -45,8 +44,12 @@ class Envelopes extends React.Component {
     return parameterize(this.props.params.name)
   }
 
+  get inboxAmountCents() {
+    return R.reduce((acc, transaction) => acc + transaction.amountCents, 0, this.props.transactions)
+  }
+
   get envelopesWithInbox() {
-    return [{ name: 'Inbox', amountCents: 0 }].concat(this.props.envelopes)
+    return [{ name: 'Inbox', amountCents: this.inboxAmountCents }].concat(this.props.envelopes)
   }
 
   renderList() {
