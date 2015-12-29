@@ -15,6 +15,18 @@ function getProperty(ofx, prop) {
   return R.path([prop, 0], ofx) || null
 }
 
+function getPayee(ofxTransaction) {
+  const prop = R.partial(getProperty, [ofxTransaction])
+
+  const name = prop('NAME')
+  const memo = prop('MEMO')
+  const checkNum = prop('CHECKNUM')
+
+  if (name) { return name }
+  if (memo) { return memo }
+  if (checkNum) { return `Check #${checkNum}` }
+}
+
 function toTransaction(ofxTransaction) {
   const acl = new Parse.ACL(Parse.User.current())
   const prop = R.partial(getProperty, [ofxTransaction])
@@ -24,7 +36,7 @@ function toTransaction(ofxTransaction) {
     postedAt: date.isValid() && date.toDate(),
     institutionId: prop('FITID'),
     memo: prop('MEMO'),
-    payee: prop('NAME') || prop('MEMO') || prop('CHECKNUM'),
+    payee: getPayee(ofxTransaction),
     designated: false,
     amountCents: money.parseSignedString(prop('TRNAMT')),
     type: prop('TRNTYPE'),
