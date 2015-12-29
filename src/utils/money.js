@@ -19,4 +19,11 @@ export function parseString(string) {
   return parseInt(string.replace(/\W/g, '').replace(/^0+/, ''), 10) || 0
 }
 
+export function parseSignedString(string) {
+  const match = string.match(/^\D+/)
+  const sign = match && (match[0].replace(/[^\-]/g, '') === '-') ? -1 : 1
+
+  return parseString(string) * sign
+}
+
 export default exports

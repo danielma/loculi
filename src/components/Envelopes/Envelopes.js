@@ -2,9 +2,10 @@ import React, { PropTypes } from 'react'
 import Parse from 'parse'
 import R from 'ramda'
 import Modal from 'react-modal'
-import { EnvelopeSidebar, DesignationList, NewEnvelope } from 'components'
+import { EnvelopeSidebar, DesignationList, InboxList, NewEnvelope } from 'components'
 import { parameterize } from 'utils/string'
 import { observe } from 'utils/react'
+import styles from './Envelopes.sass'
 
 class Envelopes extends React.Component {
   static propTypes = {
@@ -19,6 +20,7 @@ class Envelopes extends React.Component {
     // connect
     // TODO: real prop type here
     envelopes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
   }
 
   static defaultProps = {
@@ -32,21 +34,45 @@ class Envelopes extends React.Component {
     this.state = { selectedEnvelope: null }
   }
 
+  get selectedEnvelope() {
+    const { paramEnvelope, envelopesWithInbox } = this
+
+    return R.find((envelope) => parameterize(envelope.name) === paramEnvelope, envelopesWithInbox)
+  }
+
+  get paramEnvelope() {
+    return parameterize(this.props.params.name)
+  }
+
+  get inboxAmountCents() {
+    return R.reduce((acc, transaction) => acc + transaction.amountCents, 0, this.props.transactions)
+  }
+
+  get envelopesWithInbox() {
+    return [{ name: 'Inbox', amountCents: this.inboxAmountCents }].concat(this.props.envelopes)
+  }
+
+  renderList() {
+    const selectedEnvelope = this.selectedEnvelope
+
+    switch (true) {
+      case (selectedEnvelope && selectedEnvelope.name === 'Inbox'):
+        return <InboxList transactions={this.props.transactions} />
+      case !!selectedEnvelope:
+        return <DesignationList envelope={selectedEnvelope} />
+      default:
+        return <div className={styles.blankSlate} />
+    }
+  }
+
   render() {
-    const styles = require('./Envelopes.sass')
-    const paramEnvelope = parameterize(this.props.params.name)
-    const newEnvelope = paramEnvelope === 'new'
-    const selectedEnvelope = R.find(
-      (envelope) => parameterize(envelope.name) === paramEnvelope,
-      this.props.envelopes)
+    const newEnvelope = this.paramEnvelope === 'new'
 
     return (
       <div className={styles.wrapper}>
-        <EnvelopeSidebar envelopes={this.props.envelopes} selected={selectedEnvelope} />
+        <EnvelopeSidebar envelopes={this.envelopesWithInbox} selected={this.selectedEnvelope} />
         <div className={styles.designationList}>
-          {selectedEnvelope ?
-            <DesignationList envelope={selectedEnvelope} /> :
-            <div className={styles.blankSlate} />}
+          {this.renderList()}
         </div>
         <Modal isOpen={newEnvelope} onRequestClose={() => this.props.history.goBack()}>
           <NewEnvelope />
@@ -56,4 +82,7 @@ class Envelopes extends React.Component {
   }
 }
 
-export default observe({ envelopes: new Parse.Query('Envelope') })(Envelopes)
+export default observe({
+  envelopes: new Parse.Query('Envelope'),
+  transactions: new Parse.Query('Transaction').notEqualTo('designated', true),
+})(Envelopes)
