@@ -56,7 +56,7 @@ class Envelopes extends React.Component {
     const selectedEnvelope = this.selectedEnvelope
 
     switch (true) {
-      case (selectedEnvelope.name === 'Inbox'):
+      case (selectedEnvelope && selectedEnvelope.name === 'Inbox'):
         return <InboxList transactions={this.props.transactions} />
       case !!selectedEnvelope:
         return <DesignationList envelope={selectedEnvelope} />

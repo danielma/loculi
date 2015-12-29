@@ -1,8 +1,35 @@
+import Parse from 'parse'
 import OFX from 'banking/lib/ofx'
 import R from 'ramda'
+import moment from 'moment'
+import money from './money'
+
+const Transaction = Parse.Object.extend('Transaction')
 
 function findTransactions(ofx) {
-  return R.path(['body', 'OFX', 'BANKMSGSRSV1', 0, 'STMTTRNRS', 0, 'STMTRS', 0, 'BANKTRANLIST', 0, 'STMTTRN'], ofx) || []
+  return R.path(['body', 'OFX', 'BANKMSGSRSV1', 0, 'STMTTRNRS', 0, 'STMTRS', 0,
+                 'BANKTRANLIST', 0, 'STMTTRN'], ofx) || []
+}
+
+function getProperty(ofx, prop) {
+  return R.path([prop, 0], ofx) || null
+}
+
+function toTransaction(ofxTransaction) {
+  const acl = new Parse.ACL(Parse.User.current())
+  const prop = R.partial(getProperty, [ofxTransaction])
+  const date = moment(prop('DTPOSTED'), 'YYYYMMDDHHmmss')
+
+  return new Transaction({
+    postedAt: date.isValid() && date.toDate(),
+    institutionId: prop('FITID'),
+    memo: prop('MEMO'),
+    payee: prop('NAME') || prop('MEMO') || prop('CHECKNUM'),
+    designated: false,
+    amountCents: money.parseSignedString(prop('TRNAMT')),
+    type: prop('TRNTYPE'),
+    ACL: acl,
+  })
 }
 
 export function parse(ofxStr) {
@@ -11,8 +38,7 @@ export function parse(ofxStr) {
 
 export function importOFX(ofxStr) {
   parse(ofxStr).then((ofx) => {
-    console.log(ofx)
-    console.log(findTransactions(ofx).map((t) => t))
+    Parse.Object.saveAll(findTransactions(ofx).map(toTransaction))
   })
 }
 
