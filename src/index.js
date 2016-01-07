@@ -5,10 +5,7 @@ import { Router } from 'react-router'
 import Routes from 'routes'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 
-Parse.initialize(
-  'mBMPw6wrZ1sWdo5C0I3fjh9JYetqOaQXbrKbjiXE',
-  'msIKCvhGCUQCKO3zHjvh3vuYoS9QnI12qEuUySj1'
-)
+Parse.initialize(process.env.PARSE_APPLICATION_ID, process.env.PARSE_JAVASCRIPT_KEY)
 
 const history = createBrowserHistory()
 

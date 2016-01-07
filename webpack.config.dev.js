@@ -1,6 +1,8 @@
 const path = require('path')
 const webpack = require('webpack')
 
+require('dotenv').load()
+
 module.exports = {
   devtool: 'eval-source-map',
   entry: [
@@ -18,6 +20,13 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify({
+        NODE_ENV: "development",
+        PARSE_APPLICATION_ID: process.env.PARSE_APPLICATION_ID,
+        PARSE_JAVASCRIPT_KEY: process.env.PARSE_JAVASCRIPT_KEY,
+      }),
+    })
   ],
   module: {
     loaders: [

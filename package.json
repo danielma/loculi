@@ -60,6 +60,7 @@
     "banking": "^1.0.0",
     "classnames": "^2.2.1",
     "css-loader": "^0.23.0",
+    "dotenv": "^1.2.0",
     "history": "~1.13",
     "immutable": "^3.7.6",
     "moment": "^2.10.6",
