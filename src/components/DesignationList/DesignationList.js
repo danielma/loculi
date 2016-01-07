@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Parse from 'parse'
-import { money } from 'utils'
 import { observe } from 'utils/react'
+import { ListDesignation } from 'components'
 
 function getObserves(props) {
   const designations = new Parse.Query('Designation')
@@ -29,12 +29,9 @@ class DesignationList extends React.Component {
           <span className={styles.amount}>Amount</span>
         </div>
         {this.props.designations.map((designation) => (
-          <div className={styles.designation} key={designation.objectId}>
-            <span className={styles.name}>{designation.transaction.payee}</span>
-            <span className={`${styles.amount} ${designation.amountCents >= 0 ? styles.positive : styles.negative}`}>
-              {money.centsToString(designation.amountCents)}
-            </span>
-          </div>
+          <ListDesignation
+            designation={designation}
+            key={designation.objectId} />
         ))}
       </div>
     )
