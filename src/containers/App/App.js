@@ -9,7 +9,7 @@ class App extends React.Component {
 
     // connect
     user: PropTypes.object.isRequired,
-  }
+  };
 
   render() {
     const styles = require('./App.sass')

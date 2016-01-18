@@ -21,12 +21,12 @@ class Envelopes extends React.Component {
     // TODO: real prop type here
     envelopes: PropTypes.arrayOf(PropTypes.object).isRequired,
     transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  }
+  };
 
   static defaultProps = {
     onSelect: () => {},
     params: {},
-  }
+  };
 
   constructor(props) {
     super(props)

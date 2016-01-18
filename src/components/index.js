@@ -10,6 +10,7 @@ export NewFund from './NewFund/NewFund'
 export AddTransaction from './AddTransaction/AddTransaction'
 export DesignationList from './DesignationList/DesignationList'
 export ListDesignation from './ListDesignation/ListDesignation'
+export TransactionEditor from './TransactionEditor/TransactionEditor'
 export InboxList from './InboxList/InboxList'
 
 // utility

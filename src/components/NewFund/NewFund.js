@@ -22,7 +22,7 @@ function round(num, dec = 2) {
 class NewFund extends React.Component {
   static propTypes = {
     envelopes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  }
+  };
 
   constructor(props) {
     super(props)
@@ -44,7 +44,7 @@ class NewFund extends React.Component {
         })).
         toArray(),
     })
-  }
+  };
 
   handleFundingPercentageChange = ({ objectId }, e) => {
     e.preventDefault()
@@ -57,7 +57,7 @@ class NewFund extends React.Component {
     })
 
     this.setState({ fundings })
-  }
+  };
 
   setEnvelopeFunding({ objectId }, amountCents) {
     const percent = round((amountCents / this.incomeCents) * 100, 2)

@@ -9,7 +9,7 @@ export default class Import extends React.Component {
     reader.onload = (e) => ofx.importOFX(e.target.result)
 
     reader.readAsText(files[0])
-  }
+  };
 
   render() {
     return (

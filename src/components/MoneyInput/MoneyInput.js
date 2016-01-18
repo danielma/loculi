@@ -6,19 +6,19 @@ export default class MoneyInput extends React.Component {
     value: PropTypes.number,
     onChange: PropTypes.func,
     reverseDisplay: PropTypes.bool,
-  }
+  };
 
   static defaultProps = {
     value: 0,
     onChange: noop,
     reverseDisplay: false,
-  }
+  };
 
   handleChange = () => {
     const { value } = this.refs.input
 
     this.props.onChange(money.parseString(value) * this.signMultiplier)
-  }
+  };
 
   get signMultiplier() {
     return this.props.reverseDisplay ? -1 : 1

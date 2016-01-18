@@ -17,7 +17,7 @@ class DesignationList extends React.Component {
   static propTypes = {
     // TODO: proptypes?
     designations: PropTypes.arrayOf(PropTypes.object).isRequired,
-  }
+  };
 
   render() {
     const styles = require('./DesignationList.sass')

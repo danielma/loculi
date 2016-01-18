@@ -2,9 +2,14 @@ import React, { PropTypes } from 'react'
 import R from 'ramda'
 import styles from '../ListDesignation/ListDesignation.sass'
 import { money } from 'utils'
+import { TransactionEditor } from 'components'
 
 const payee = (designationOrTransaction) => (
   R.path(['transaction', 'payee'], designationOrTransaction) || designationOrTransaction.payee
+)
+
+const transactionId = (designationOrTransaction) => (
+  R.path(['transaction', 'objectId'], designationOrTransaction) || designationOrTransaction.objectId
 )
 
 export default class ListDesignation extends React.Component {
@@ -12,7 +17,7 @@ export default class ListDesignation extends React.Component {
     designation: PropTypes.shape({
       amountCents: PropTypes.number.isRequired,
     }).isRequired,
-  }
+  };
 
   constructor(props) {
     super(props)
@@ -24,20 +29,23 @@ export default class ListDesignation extends React.Component {
 
   handleClick = () => {
     this.setState({ isEditing: !this.state.isEditing })
-  }
+  };
 
   render() {
     const { designation } = this.props
 
     return (
-      <div className={styles.designation} onClick={this.handleClick}>
-        <span className={styles.name}>{payee(designation)}</span>
-        <span className={`${styles.amount} ${designation.amountCents >= 0 ? styles.positive : styles.negative}`}>
-          {money.centsToString(designation.amountCents)}
-        </span>
+      <div onClick={this.handleClick}
+        className={`${styles.designation} ${this.state.isEditing && styles.editing}`}>
+        <div className={styles.row}>
+          <span className={styles.name}>{payee(designation)}</span>
+          <span className={`${styles.amount} ${designation.amountCents >= 0 ? styles.positive : styles.negative}`}>
+            {money.centsToString(designation.amountCents)}
+          </span>
+        </div>
         {this.state.isEditing &&
-          <div>
-            kalamaty jane
+          <div className={styles.edit}>
+            <TransactionEditor id={transactionId(designation)} commit={() => true} />
           </div>
         }
       </div>
