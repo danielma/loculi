@@ -35,7 +35,7 @@
     "no-alert": 2,
     "semi": 0,
     "new-cap": [2, {
-      "capIsNewExceptions": ["Immutable", "Immutable.List", "Immutable.Map"]
+      "capIsNewExceptions": ["Immutable", "Immutable.List", "Immutable.Map", "Create"]
     }],
     "id-length": [2, {"exceptions": ["R", "x", "y", "e"]}],
     "max-len": [1, 100],
